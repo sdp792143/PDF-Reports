@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated PDFs</title>
+</head>
+<body>
+    <h2>Generated PDF Files</h2>
+    <ul id="file-list"></ul>
+
+    <script>
+        const repo = " sdp792143/PDF-Reports ";
+        const folder = "pdfs";
+
+        fetch(`https://api.github.com/repos/${repo}/contents/${folder}`)
+            .then(res => res.json())
+            .then(files => {
+                let list = document.getElementById("file-list");
+                files.forEach(file => {
+                    if (file.name.endsWith(".pdf")) {
+                        let li = document.createElement("li");
+                        let link = document.createElement("a");
+                        link.href = file.download_url;
+                        link.innerText = file.name;
+                        li.appendChild(link);
+                        list.appendChild(li);
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
